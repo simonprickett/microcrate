@@ -130,7 +130,7 @@ class CrateDB:
             json = payload
         )
 
-        if response.status_code == 400 or response.status_code == 404:
+        if response.status_code == 400 or response.status_code == 404 or response.status_code == 409:
             error_doc = response.json()
             raise CrateDBError(error_doc)
         elif response.status_code != 200:
