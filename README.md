@@ -2,7 +2,7 @@
 
 ## Introduction
 
-TODO
+MicroCrate is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.
 
 ## Installation
 
@@ -14,6 +14,8 @@ This driver uses the base64 implementation from [`micropython-lib`](https://gith
 import mip
 mip.install('base64')
 ```
+
+Alternatively, copy [this file](https://github.com/micropython/micropython-lib/blob/master/python-stdlib/base64/base64.py) to your device manually using [`mpremote`](https://docs.micropython.org/en/latest/reference/mpremote.html), [Thonny](https://thonny.org/) or whichever IDE you normally use for MicroPython projects.
 
 ### Installing MicroCrate
 
@@ -28,3 +30,11 @@ TODO
 TODO
 
 For more examples, check out [`example_usage.py`](./example_usage.py).
+
+## Testing
+
+This driver library was tested using the following MicroPython versions:
+
+* **1.23.0**
+  * macOS/darwin
+  * Raspberry Pi Pico W
