@@ -2,7 +2,7 @@
 
 ## Introduction
 
-MicroCrate is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.
+MicroCrate is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.  It connects to CrateDB using the [HTTP Endpoint](https://cratedb.com/docs/crate/reference/en/latest/interfaces/http.html).
 
 ## Installation
 
