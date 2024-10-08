@@ -25,15 +25,147 @@ Alternatively, copy [this file](https://github.com/micropython/micropython-lib/b
 
 TODO
 
-## Connecting to CrateDB
+## Using the Driver in a MicroPython Script
+
+Import the driver like this:
+
+```python
+import microcrate
+```
+
+### Connecting to CrateDB
+
+Connect to a CrateDB cluster in the cloud by providing hostname, user name and password:
+
+```python
+crate = microcrate.CrateDB(
+    host="host", 
+    user="user", 
+    password="password"
+)
+```
+
+The driver uses SSL by default.
+
+If you're running CrateDB locally (with Docker for example), connect like this:
+
+```python
+crate = microcrate.CrateDB(
+    host="hostname", 
+    use_ssl=False
+)
+```
+
+The driver will connect to port 4200 unless you provide an alternative value:
+
+```python
+crate = microcrate.CrateDB(
+    host="host", 
+    user="user", 
+    port=4201,
+    password="password"
+)
+```
+
+### Interacting with CrateDB
+
+CrateDB is a SQL database: you'll store, update and retieve data using SQL statements.
+
+#### Retrieving Data
+
+The `execute` method sends a SQL statement to the database for execution, and returns the result:
+
+```python
+TODO
+```
+
+You can also use parameterized queries:
+
+```python
+TODO
+```
+
+Data is returned as a dictionary that looks like this:
+
+```python
+TODO
+```
+
+Use the `with_types` parameter to have CrateDB return information about the data type of each column in the resultset. This feature is off by defaault to minimize network bandwidth.
+
+```python
+TODO
+```
+
+The resultset then contains an extra key, `col_types`:
+
+```python
+TODO
+```
+
+Constants are provided for each type.  For example type `12` is `CRATEDB_TYPE_OBJECT`.
+
+#### Inserting / Updating Data
+
+Here's an example insert statement:
+
+```python
+TODO
+```
+
+The response from CrateDB looks like this:
+
+```python
+TODO
+```
+
+If you don't need a response, set the `return_response` parameter to `False` (default is `True`). This will save a small amount of time that the driver normally spends on processing the response.
+
+```python
+TODO
+```
+
+Here's an example of a parameterized insert statement:
+
+```python
+TODO
+```
+
+You can add multiple records in a single network round trip using a bulk insert:
+
+```python
+TODO
+```
+
+Existing rows can also be updated:
+
+```python
+TODO
+```
+
+The response looks like this:
+
+```python
+TODO
+```
+
+#### Deleting Data
+
+Delete queries work like any other SQL statement:
+
+```python
+TODO
+```
+
+And the response from the above looks like this:
+
+```python
+TODO
+```
+
+#### Errors / Exceptions
 
 TODO
-
-## Interacting with CrateDB
-
-TODO
-
-
 
 ## Examples
 
