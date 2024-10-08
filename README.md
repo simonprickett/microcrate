@@ -4,6 +4,10 @@
 
 MicroCrate is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.  It connects to CrateDB using the [HTTP Endpoint](https://cratedb.com/docs/crate/reference/en/latest/interfaces/http.html).
 
+To use this, you'll need a CrateDB database cluster.  Sign up for our cloud free tier [here](https://console.cratedb.cloud/) or get started with Docker [here](https://hub.docker.com/_/crate).
+
+Want to learn more about CrateDB?  Take our free [Fundamentals course](https://learn.cratedb.com/course-overview) at the CrateDB Academy.
+
 ## Installation
 
 ### Installing Dependencies
@@ -29,7 +33,11 @@ TODO
 
 TODO
 
-For more examples, check out [`example_usage.py`](./example_usage.py).
+
+
+## Examples
+
+The [`examples`](examples/) folder contains example MicroPython scripts, some of which are for specific microcontroller boards, including the popular Raspberry Pi Pico W.
 
 ## Testing
 
@@ -38,3 +46,5 @@ This driver library was tested using the following MicroPython versions:
 * **1.23.0**
   * macOS/darwin
   * Raspberry Pi Pico W
+
+If you have other microcontroller boards that you can test the driver with or provide examples for, we'd love to receive a pull request!

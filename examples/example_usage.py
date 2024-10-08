@@ -1,13 +1,18 @@
+# Example script showing different types of interactions with
+# CrateDB. This has no hardware dependencies so should run 
+# in any MicroPython environment. You will need to edit the
+# code below to use your CrateDB credentials.
+
 import microcrate
 
 # CrateDB Docker / local network, no SSL.
-# crate = microcrate.CrateDB(host="192.168.5.4", use_ssl=False)
+# crate = microcrate.CrateDB(host="hostname", use_ssl=False)
 
 # CrateDB Cloud.
 crate = microcrate.CrateDB(
-    host="some-example-cluster.eks1.eu-west-1.aws.cratedb.net", 
-    user="someuser", 
-    password="secretSqu1rre199*!"
+    host="host", 
+    user="user", 
+    password="password"
 )
 
 try:
