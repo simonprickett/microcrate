@@ -175,8 +175,10 @@ The [`examples`](examples/) folder contains example MicroPython scripts, some of
 
 This driver library was tested using the following MicroPython versions:
 
-* **1.23.0**
+* **1.23.0** ([download](https://micropython.org/download/))
   * macOS/darwin
+  * Raspberry Pi Pico W
+* **1.23.0 (Pimoroni build)** ([download](https://github.com/pimoroni/pimoroni-pico/releases))
   * Raspberry Pi Pico W
 
 If you have other microcontroller boards that you can test the driver with or provide examples for, we'd love to receive a pull request!
