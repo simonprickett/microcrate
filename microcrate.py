@@ -1,4 +1,8 @@
-import requests
+try:
+    import requests
+except ImportError:
+    import urequests as requests
+    
 from base64 import b64encode
 
 # IDs of CrateDB supported data types.
@@ -124,11 +128,14 @@ class CrateDB:
             if not "args" in payload:
                 payload["bulk_args"] = args
 
-        response = requests.post(
-            request_url,
-            headers = headers,
-            json = payload
-        )
+        try:
+            response = requests.post(
+                request_url,
+                headers = headers,
+                json = payload
+            )
+        except OSError as o:
+            raise NetworkError(o)
 
         if response.status_code == 400 or response.status_code == 404 or response.status_code == 409:
             error_doc = response.json()
