@@ -69,84 +69,203 @@ crate = microcrate.CrateDB(
 
 ### Interacting with CrateDB
 
-CrateDB is a SQL database: you'll store, update and retieve data using SQL statements.
+CrateDB is a SQL database: you'll store, update and retieve data using SQL statements.  The examples that follow assume a table schema that looks like this:
+
+```sql
+CREATE TABLE temp_humidity (
+  sensor_id TEXT, 
+  ts TIMESTAMP WITH TIME ZONE GENERATED ALWAYS AS current_timestamp,
+  temp DOUBLE PRECISION, 
+  humidity DOUBLE PRECISION
+);
+```
+
+Assume that the table contains a few sample rows.
 
 #### Retrieving Data
 
 The `execute` method sends a SQL statement to the database for execution, and returns the result:
 
 ```python
-TODO
+response = crate.execute(
+    "SELECT sensor_id, ts, temp, humidity FROM temp_humidity ORDER BY ts DESC"
+)
 ```
 
 You can also use parameterized queries:
 
 ```python
-TODO
+response = crate.execute(
+    "SELECT sensor_id, ts, temp, humidity FROM temp_humidity WHERE sensor_id = ? ORDER BY ts DESC",
+    [
+        "a01"
+    ]
+)
 ```
 
 Data is returned as a dictionary that looks like this:
 
 ```python
-TODO
+{
+    'rows': [
+        ['a01', 1728473302619, 22.8, 59.1], 
+        ['a02', 1728473260880, 3.3, 12.9], 
+        ['a02', 1728473251188, 3.2, 12.7], 
+        ['a03', 1728473237365, 28.4, 65.7], 
+        ['a01', 1728473223332, 22.3, 58.6]
+    ], 
+    'rowcount': 5, 
+    'cols': [
+        'sensor_id', 
+        'ts', 
+        'temp', 
+        'humidity'
+    ], 
+    'duration': 18.11329
+}
 ```
 
 Use the `with_types` parameter to have CrateDB return information about the data type of each column in the resultset. This feature is off by defaault to minimize network bandwidth.
 
 ```python
-TODO
+response = crate.execute(
+    "SELECT sensor_id, ts, temp FROM temp_humidity WHERE sensor_id = ? ORDER BY ts DESC",
+    [
+        "a01"
+    ],
+    with_types=True
+)
 ```
 
 The resultset then contains an extra key, `col_types`:
 
 ```python
-TODO
+{
+    'col_types': [
+        4, 
+        11, 
+        6
+    ], 
+    'cols': [
+        'sensor_id', 
+        'ts', 
+        'temp'
+    ], 
+    'rowcount': 2, 
+    'rows': [
+        ['a01', 1728473302619, 22.8], 
+        ['a01', 1728473223332, 22.3]
+    ], 
+    'duration': 7.936583
+}
 ```
 
-Constants are provided for each type.  For example type `12` is `CRATEDB_TYPE_OBJECT`.
+Constants are provided for each type.  For example type `11` is `CRATEDB_TYPE_TIMESTAMP_WITH_TIME_ZONE`.
 
 #### Inserting / Updating Data
 
 Here's an example insert statement:
 
 ```python
-TODO
+response = crate.execute(
+    "INSERT INTO temp_humidity (sensor_id, temp, humidity) VALUES (?, ?, ?)",
+    [
+        "a01",
+        22.8,
+        60.1
+    ]
+)
 ```
 
 The response from CrateDB looks like this:
 
 ```python
-TODO
+{
+    'rows': [
+        []
+    ], 
+    'rowcount': 1, 
+    'cols': [], 
+    'duration': 38.615707
+}
 ```
 
 If you don't need a response, set the `return_response` parameter to `False` (default is `True`). This will save a small amount of time that the driver normally spends on processing the response.
 
 ```python
-TODO
+response = crate.execute(
+    "INSERT INTO temp_humidity (sensor_id, temp, humidity) VALUES (?, ?, ?)",
+    [
+        "a01",
+        22.9,
+        60.3
+    ],
+    return_response=False
+)
 ```
 
-Here's an example of a parameterized insert statement:
-
-```python
-TODO
-```
+`response` will be `None`.
 
 You can add multiple records in a single network round trip using a bulk insert:
 
 ```python
-TODO
+response = crate.execute(
+    "INSERT INTO temp_humidity (sensor_id, temp, humidity) VALUES (?, ?, ?)",
+    [
+        [
+            "a01",
+            22.7,
+            60.1
+        ],
+        [
+            "a02",
+            3.3,
+            12.9
+        ]
+    ]
+)
+```
+
+The response looks like this, note that you can expect to receive multiple results each containing their own `rowcount`:
+
+```python
+{
+    'results': [
+        {
+            'rowcount': 1
+        }, 
+        {
+            'rowcount': 1
+        }
+    ], 
+    'cols': [], 
+    'duration': 32.546875
+}
 ```
 
 Existing rows can also be updated:
 
 ```python
-TODO
+response = crate.execute(
+    "UPDATE temp_humidity SET sensor_id = ? WHERE sensor_id = ?",
+    [
+        "a04",
+        "a01"
+    ]
+)
 ```
 
-The response looks like this:
+The response includes the number of rows affected by the update:
 
 ```python
-TODO
+{
+    'rows': [
+        []
+    ], 
+    'rowcount': 5, 
+    'cols': [], 
+    'duration': 696.36975
+}
 ```
 
 #### Deleting Data
@@ -154,18 +273,84 @@ TODO
 Delete queries work like any other SQL statement:
 
 ```python
-TODO
+response = crate.execute(
+    "DELETE FROM temp_humidity WHERE sensor_id = ?",
+    [
+        "a02"
+    ]
+)
 ```
 
-And the response from the above looks like this:
+And the response from the above looks like this, again including the number of rows affected:
 
 ```python
-TODO
+{
+    'rows': [
+        []
+    ], 
+    'rowcount': 3, 
+    'cols': [], 
+    'duration': 66.81604
+}
 ```
 
 #### Errors / Exceptions
 
-TODO
+The driver can throw the following types of exception:
+
+* `NetworkError`: when there is a network level issue, for example the hostname cannot be resolved.
+* `CrateDBError`: errors returned by the CrateDB cluster, for example when invalid SQL is submitted.
+
+Here's an example showing how to catch a network error:
+
+```python
+crate = microcrate.CrateDB("nonexist", use_ssl = False)
+
+try:
+    response = crate.execute(
+        "SELECT sensor_id, ts, temp FROM temp_humidity WHERE sensor_id = ? ORDER BY ts DESC",
+        [
+            "a01"
+        ],
+        with_types=True
+    )
+except microcrate.NetworkError as e:
+    print("Network error:")
+    print(e)
+```
+
+Output:
+
+```python
+Network error:
+[addrinfo error 8]
+```
+
+This example shows a `CrateDBError`:
+
+```python
+try:
+    response = crate.execute(
+        "SELECT nonexist FROM temp_humidity"
+    )
+except microcrate.CrateDBError as e:
+    print("CrateDB error:")
+    print(e)
+```
+
+Output:
+
+```python
+CrateDB error:
+{
+    'error': {
+        'message': 'ColumnUnknownException[Column nonexist unknown]', 
+        'code': 4043
+    }
+}
+```
+
+Constants for each value of `code` are provided.  For example `4043` is `CRATEDB_ERROR_UNKNOWN_COLUMN `.
 
 ## Examples
 
