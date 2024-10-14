@@ -268,6 +268,12 @@ The response includes the number of rows affected by the update:
 }
 ```
 
+#### Working with Objects and Arrays
+
+TODO
+
+For more examples, see the [`object_examples.py`](examples/object_examples.py) script in the `examples` folder.
+
 #### Deleting Data
 
 Delete queries work like any other SQL statement:
