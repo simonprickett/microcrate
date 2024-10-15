@@ -6,7 +6,7 @@ MicroCrate is a [CrateDB](https://cratedb.com) driver for the [MicroPython](http
 
 To use this, you'll need a CrateDB database cluster.  Sign up for our cloud free tier [here](https://console.cratedb.cloud/) or get started with Docker [here](https://hub.docker.com/_/crate).
 
-Want to learn more about CrateDB?  Take our free [Fundamentals course](https://learn.cratedb.com/course-overview) at the CrateDB Academy.  You can also [watch this video](https://www.youtube.com/watch?v=8_rirCsCqac) from the Notts IoT Meetup where Simon Prickett, CrateDB's Developer Advocate, demonstrates how to use an early version of this driver with various sensors attached to Raspberry Pi Pico W devices.
+Want to learn more about CrateDB?  Take our free [Fundamentals course](https://learn.cratedb.com/course-overview) at the CrateDB Academy.  You can also [watch this video](https://www.youtube.com/watch?v=8_rirCsCqac) from the Notts IoT Meetup where [Simon Prickett](https://simonprickett.dev), CrateDB's Developer Advocate, demonstrates how to use an early version of this driver with various sensors attached to Raspberry Pi Pico W devices.
 
 ## Installation
 
