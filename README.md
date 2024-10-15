@@ -16,7 +16,7 @@ This driver uses the base64 implementation from [`micropython-lib`](https://gith
 
 ```python
 import mip
-mip.install('base64')
+mip.install("base64")
 ```
 
 Alternatively, copy [this file](https://github.com/micropython/micropython-lib/blob/master/python-stdlib/base64/base64.py) to your device manually using [`mpremote`](https://docs.micropython.org/en/latest/reference/mpremote.html), [Thonny](https://thonny.org/) or whichever IDE you normally use for MicroPython projects.
