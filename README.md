@@ -270,6 +270,10 @@ The response includes the number of rows affected by the update:
 
 #### Working with Objects and Arrays
 
+CrateDB supports flexible storage and indexing of objects / JSON data.  To learn more about this, check out our [blog post](https://cratedb.com/blog/handling-dynamic-objects-in-cratedb) that explains the different ways objects can be stored.
+
+Here are some basic examples showing how to store objects with MicroCrate and retrieve desired fields from them:
+
 TODO
 
 For more examples, see the [`object_examples.py`](examples/object_examples.py) script in the `examples` folder.
