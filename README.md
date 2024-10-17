@@ -96,7 +96,11 @@ You can also use parameterized queries:
 
 ```python
 response = crate.execute(
-    "SELECT sensor_id, ts, temp, humidity FROM temp_humidity WHERE sensor_id = ? ORDER BY ts DESC",
+    """
+        SELECT sensor_id, ts, temp, humidity
+        FROM temp_humidity WHERE sensor_id = ?
+        ORDER BY ts DESC
+    """,
     [
         "a01"
     ]
