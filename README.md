@@ -16,7 +16,7 @@ This driver uses the base64 implementation from [`micropython-lib`](https://gith
 
 ```python
 import mip
-mip.install('base64')
+mip.install("base64")
 ```
 
 Alternatively, copy [this file](https://github.com/micropython/micropython-lib/blob/master/python-stdlib/base64/base64.py) to your device manually using [`mpremote`](https://docs.micropython.org/en/latest/reference/mpremote.html), [Thonny](https://thonny.org/) or whichever IDE you normally use for MicroPython projects.
@@ -267,6 +267,76 @@ The response includes the number of rows affected by the update:
     'duration': 696.36975
 }
 ```
+
+#### Working with Objects and Arrays
+
+CrateDB supports flexible storage and indexing of objects / JSON data.  To learn more about this, check out our [blog post](https://cratedb.com/blog/handling-dynamic-objects-in-cratedb) that explains the different ways objects can be stored.
+
+Here are some basic examples showing how to store objects with MicroCrate and retrieve desired fields from them.
+
+Assume a table with the following definition having a [dynamic object](https://cratedb.com/blog/handling-dynamic-objects-in-cratedb) column:
+
+```sql
+CREATE TABLE driver_object_test (
+    id TEXT PRIMARY KEY, 
+    data OBJECT(DYNAMIC)
+)
+```
+
+Objects of arbitrary structure are inserted like this:
+
+```python
+response = crate.execute(
+    "INSERT INTO driver_object_test (id, data) VALUES (?, ?)",
+    [
+        "2cae54",
+        {
+            "sensor_readings": {
+                "temp": 23.3,
+                "humidity": 61.2
+            },
+            "metadata": {
+                "software_version": "1.19",
+                "battery_percentage": 57,
+                "uptime": 2851200
+            }
+        }
+    ]
+)
+```
+
+And values contained in objects can be retrieved selectively like this:
+
+```python
+response = crate.execute(
+    """SELECT 
+            id,
+            data['metadata']['uptime'] AS uptime, 
+            data['sensor_readings'] AS sensor_readings 
+        FROM driver_object_test 
+        WHERE id = ?""",
+    [
+        "2cae54"
+    ]
+)
+```
+
+`response` contains the matching records like this:
+
+```python
+{
+    'rows': [
+        [2851200, {'humidity': 61.2, 'temp': 23.3}]  
+    ], 
+    'rowcount': 1, 
+    'cols': [
+        'uptime', 'sensor_readings'
+    ], 
+    'duration': 4.047666
+}
+```
+
+For more examples, see the [`object_examples.py`](examples/object_examples.py) script in the `examples` folder.
 
 #### Deleting Data
 
