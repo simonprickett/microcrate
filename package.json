@@ -1,13 +1,15 @@
 {
-    "urls": [
-        [
-            "microcrate.py", "github:simonprickett/microcrate/microcrate.py"
-        ]
-    ],
-    "deps": [
-        [
-            "base64", "latest"
-        ]
-    ],
-    "version": "0.0.1"
+  "urls": [
+    [
+      "microcrate.py",
+      "github:simonprickett/microcrate/microcrate.py"
+    ]
+  ],
+  "deps": [
+    [
+      "base64",
+      "latest"
+    ]
+  ],
+  "version": "0.0.1"
 }
