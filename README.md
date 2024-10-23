@@ -10,18 +10,19 @@ Want to learn more about CrateDB?  Take our free [Fundamentals course](https://l
 
 ## Installation
 
-### Installing Dependencies
+There are two ways to install this driver.
 
-This driver uses the base64 implementation from [`micropython-lib`](https://github.com/micropython/micropython-lib/).  Install it on your device by first establishing a network connection, then entering the following commands:
+### Install with `mpremote`
 
-```python
-import mip
-mip.install("base64")
+Install the driver with [`mpremote`](https://docs.micropython.org/en/latest/reference/mpremote.html) like this:
+
+```bash
+mpremote mip install github:simonprickett/microcrate
 ```
 
-Alternatively, copy [this file](https://github.com/micropython/micropython-lib/blob/master/python-stdlib/base64/base64.py) to your device manually using [`mpremote`](https://docs.micropython.org/en/latest/reference/mpremote.html), [Thonny](https://thonny.org/) or whichever IDE you normally use for MicroPython projects.
+This will install the driver into `/lib` on the device, along with the [base64](https://github.com/micropython/micropython-lib/tree/master/python-stdlib/base64) module from `micropython-lib`.
 
-### Installing MicroCrate
+### Install with `mip`
 
 TODO
 
