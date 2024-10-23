@@ -24,7 +24,17 @@ This will install the driver into `/lib` on the device, along with the [base64](
 
 ### Install with `mip`
 
-TODO
+You can also install the driver into `/lib` on the device by running the following commands at the MicroPython REPL on the device:
+
+```python
+import network
+import mip
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect("<your wifi SSID>", "<your wifi password>")
+wlan.isconnected() # Run this until it returns True
+mip.install("github:simonprickett/microcrate")
+```
 
 ## Using the Driver in a MicroPython Script
 
