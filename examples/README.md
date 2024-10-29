@@ -1,6 +1,6 @@
-# MicroCrate Examples
+# micropython-cratedb Examples
 
-This folder contains code samples and fully working example code for the MicroCrate driver.
+This folder contains code samples and fully working example code for the micropython-cratedb driver.
 
 * `example_usage.py`: Demonstrates various types of query.  This does not have any specific microcontroller dependencies, and can be run on desktop MicroPython.
 * `object_examples.py`: Demonstrates operations using an [OBJECT](https://cratedb.com/docs/crate/reference/en/latest/general/ddl/data-types.html#objects) column in CrateDB.  Also demonstrates the use of the [ARRAY](https://cratedb.com/docs/crate/reference/en/latest/general/ddl/data-types.html#array) container data type.

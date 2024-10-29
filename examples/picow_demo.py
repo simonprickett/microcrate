@@ -1,4 +1,4 @@
-# MicroCrate Example for the Raspberry Pi Pico W.
+# micropython-cratedb Example for the Raspberry Pi Pico W.
 # Configure your CrateDB credentials and WiFi SSID
 # and password below before running this.
 
@@ -7,10 +7,10 @@ import network
 import sys
 import time
 
-import microcrate
+import cratedb
 
 # Configure CrateDB driver.
-crate = microcrate.CrateDB(
+crate = cratedb.CrateDB(
     host="hostname", 
     user="username", 
     password="password"
@@ -65,7 +65,7 @@ while True:
         "INSERT INTO picow_test (id, temp) VALUES (?, ?)",
         [
             ip_addr,
-            temperature # TODO what units are these?
+            temperature
         ]
     )
 

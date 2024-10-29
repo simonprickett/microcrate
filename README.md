@@ -1,8 +1,8 @@
-# MicroCrate - A CrateDB Driver for MicroPython
+# micropython-cratedb - A CrateDB Driver for MicroPython
 
 ## Introduction
 
-MicroCrate is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.  It connects to CrateDB using the [HTTP Endpoint](https://cratedb.com/docs/crate/reference/en/latest/interfaces/http.html).
+micropython-cratedb is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.  It connects to CrateDB using the [HTTP Endpoint](https://cratedb.com/docs/crate/reference/en/latest/interfaces/http.html).
 
 To use this, you'll need a CrateDB database cluster.  Sign up for our cloud free tier [here](https://console.cratedb.cloud/) or get started with Docker [here](https://hub.docker.com/_/crate).
 
@@ -41,7 +41,7 @@ mip.install("github:simonprickett/microcrate")
 Import the driver like this:
 
 ```python
-import microcrate
+import cratedb
 ```
 
 ### Connecting to CrateDB
@@ -49,7 +49,7 @@ import microcrate
 Connect to a CrateDB cluster in the cloud by providing hostname, user name and password:
 
 ```python
-crate = microcrate.CrateDB(
+crate = cratedb.CrateDB(
     host="host", 
     user="user", 
     password="password"
@@ -61,7 +61,7 @@ The driver uses SSL by default.
 If you're running CrateDB locally (with Docker for example), connect like this:
 
 ```python
-crate = microcrate.CrateDB(
+crate = cratedb.CrateDB(
     host="hostname", 
     use_ssl=False
 )
@@ -70,7 +70,7 @@ crate = microcrate.CrateDB(
 The driver will connect to port 4200 unless you provide an alternative value:
 
 ```python
-crate = microcrate.CrateDB(
+crate = cratedb.CrateDB(
     host="host", 
     user="user", 
     port=4201,
@@ -287,7 +287,7 @@ The response includes the number of rows affected by the update:
 
 CrateDB supports flexible storage and indexing of objects / JSON data.  To learn more about this, check out our [blog post](https://cratedb.com/blog/handling-dynamic-objects-in-cratedb) that explains the different ways objects can be stored.
 
-Here are some basic examples showing how to store objects with MicroCrate and retrieve desired fields from them.
+Here are some basic examples showing how to store objects with micropython-cratedb and retrieve desired fields from them.
 
 Assume a table with the following definition having a [dynamic object](https://cratedb.com/blog/handling-dynamic-objects-in-cratedb) column:
 
@@ -389,7 +389,7 @@ The driver can throw the following types of exception:
 Here's an example showing how to catch a network error:
 
 ```python
-crate = microcrate.CrateDB("nonexist", use_ssl = False)
+crate = cratedb.CrateDB("nonexist", use_ssl = False)
 
 try:
     response = crate.execute(
@@ -399,7 +399,7 @@ try:
         ],
         with_types=True
     )
-except microcrate.NetworkError as e:
+except cratedb.NetworkError as e:
     print("Network error:")
     print(e)
 ```
@@ -418,7 +418,7 @@ try:
     response = crate.execute(
         "SELECT nonexist FROM temp_humidity"
     )
-except microcrate.CrateDBError as e:
+except cratedb.CrateDBError as e:
     print("CrateDB error:")
     print(e)
 ```
@@ -443,20 +443,23 @@ The [`examples`](examples/) folder contains example MicroPython scripts, some of
 
 ## Testing
 
-This driver library was tested using the following MicroPython versions:
+This driver library has been tested using the following MicroPython versions:
 
-* **1.23.0** ([download](https://micropython.org/download/))
-  * macOS/darwin
-  * Raspberry Pi Pico W
-* **1.23.0 (Pimoroni build)** ([download](https://github.com/pimoroni/pimoroni-pico/releases))
-  * Raspberry Pi Pico W
+* **1.24.0** 
+  * macOS/darwin ([install with Homebrew package manager](https://formulae.brew.sh/formula/micropython))
+  * Raspberry Pi Pico W ([download](https://micropython.org/download/RPI_PICO_W/))
+* **1.23.0** 
+  * macOS/darwin ([install with Homebrew package manager](https://formulae.brew.sh/formula/micropython))
+  * Raspberry Pi Pico W ([download](https://micropython.org/download/RPI_PICO_W/))
+* **1.23.0 (Pimoroni build)**
+  * Raspberry Pi Pico W ([download](https://github.com/pimoroni/pimoroni-pico/releases))
 
-If you have other microcontroller boards that you can test the driver with or provide examples for, we'd love to receive a pull request!
+If you have other microcontroller boards that you can test the driver with or provide examples for, we'd love to receive a [pull request](/pulls)!
 
 ## Need Help?
 
 If you need help, have a bug report or feature request, or just want to show us your project that uses this driver then we'd love to hear from you!
 
-For bugs or feature requests, please raise an issue on GitHub.  We also welcome pull requests!
+For bugs or feature requests, please raise an [issue](/issues) on GitHub.  We also welcome [pull requests](/pulls)!
 
 If you have a project to share with us, or a more general question about this driver or CrateDB, please post in our [community forum](https://community.cratedb.com/).
