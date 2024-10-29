@@ -2,7 +2,7 @@
   "urls": [
     [
       "cratedb.py",
-      "github:simonprickett/microcrate/cratedb.py"
+      "github:simonprickett/micropython-cratedb/cratedb.py"
     ]
   ],
   "deps": [
