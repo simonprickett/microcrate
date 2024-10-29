@@ -17,7 +17,7 @@ There are two ways to install this driver.
 Install the driver with [`mpremote`](https://docs.micropython.org/en/latest/reference/mpremote.html) like this:
 
 ```bash
-mpremote mip install github:simonprickett/microcrate
+mpremote mip install github:simonprickett/micropython-cratedb
 ```
 
 This will install the driver into `/lib` on the device, along with the [base64](https://github.com/micropython/micropython-lib/tree/master/python-stdlib/base64) module from `micropython-lib`.
@@ -33,7 +33,7 @@ wlan = network.WLAN(network.STA_IF)
 wlan.active(True)
 wlan.connect("<your wifi SSID>", "<your wifi password>")
 wlan.isconnected() # Run this until it returns True
-mip.install("github:simonprickett/microcrate")
+mip.install("github:simonprickett/micropython-cratedb")
 ```
 
 ## Using the Driver in a MicroPython Script
