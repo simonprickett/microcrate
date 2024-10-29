@@ -1,8 +1,8 @@
 {
   "urls": [
     [
-      "microcrate.py",
-      "github:simonprickett/microcrate/microcrate.py"
+      "micropython-cratedb.py",
+      "github:simonprickett/microcrate/micropython-cratedb.py"
     ]
   ],
   "deps": [
