@@ -3,13 +3,13 @@
 # run in any MicroPython environment. You will need to edit the
 # code below to use your CrateDB credentials.
 
-import microcrate
+import cratedb
 
 # CrateDB Docker / local network, no SSL.
-# crate = microcrate.CrateDB(host="hostname", use_ssl=False)
+# crate = cratedb.CrateDB(host="hostname", use_ssl=False)
 
 # CrateDB Cloud.
-crate = microcrate.CrateDB(
+crate = cratedb.CrateDB(
     host="host", 
     user="user", 
     password="password"
@@ -325,9 +325,9 @@ try:
     # {'rows': [[]], 'rowcount': 1, 'cols': [], 'duration': 67.91708}
     print(response)
 
-except microcrate.NetworkError as e:
+except cratedb.NetworkError as e:
     print("Caught NetworkError:")
     print(e)
-except microcrate.CrateDBError as c:
+except cratedb.CrateDBError as c:
     print("Caught CrateDBError:")
     print(c)
