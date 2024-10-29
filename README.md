@@ -452,3 +452,11 @@ This driver library was tested using the following MicroPython versions:
   * Raspberry Pi Pico W
 
 If you have other microcontroller boards that you can test the driver with or provide examples for, we'd love to receive a pull request!
+
+## Need Help?
+
+If you need help, have a bug report or feature request, or just want to show us your project that uses this driver then we'd love to hear from you!
+
+For bugs or feature requests, please raise an issue on GitHub.  We also welcome pull requests!
+
+If you have a project to share with us, or a more general question about this driver or CrateDB, please post in our [community forum](https://community.cratedb.com/).
