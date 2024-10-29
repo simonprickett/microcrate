@@ -65,7 +65,7 @@ while True:
         "INSERT INTO picow_test (id, temp) VALUES (?, ?)",
         [
             ip_addr,
-            temperature # TODO what units are these?
+            temperature
         ]
     )
 
