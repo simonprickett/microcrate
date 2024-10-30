@@ -6,14 +6,16 @@
 import cratedb
 
 # CrateDB Docker / local network, no SSL.
-# crate = cratedb.CrateDB(host="hostname", use_ssl=False)
+crate = cratedb.CrateDB(host="localhost", use_ssl=False)
 
-# CrateDB Cloud.
+# CrateDB Cloud, using SSL.
+"""
 crate = cratedb.CrateDB(
-    host="host", 
-    user="user", 
+    host="testdrive.cratedb.net",
+    user="username",
     password="password"
 )
+"""
 
 try:
     # Create a table.
