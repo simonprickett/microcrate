@@ -1,5 +1,7 @@
 # micropython-cratedb - A CrateDB Driver for MicroPython
 
+[![Tests](https://github.com/crate/micropython-cratedb/actions/workflows/tests.yml/badge.svg)](https://github.com/crate/micropython-cratedb/actions/workflows/tests.yml)
+
 ## Introduction
 
 micropython-cratedb is a [CrateDB](https://cratedb.com) driver for the [MicroPython](https://micropython.org) language.  It connects to CrateDB using the [HTTP Endpoint](https://cratedb.com/docs/crate/reference/en/latest/interfaces/http.html).

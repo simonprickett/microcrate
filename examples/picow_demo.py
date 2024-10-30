@@ -88,7 +88,7 @@ while True:
         )
 
         if response["rowcount"] == 1:
-            print(f"Average temperature over last 24hrs: {response["rows"][0][0]}")
+            print(f"Average temperature over last 24hrs: {response['rows'][0][0]}")
             num_iterations = 0
 
     time.sleep(10)
