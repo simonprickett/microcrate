@@ -1,11 +1,14 @@
+# ruff: noqa: W291 Trailing whitespace
+
 # micropython-cratedb Example for the Raspberry Pi Pico W.
 # Configure your CrateDB credentials and WiFi SSID
 # and password below before running this.
 
-import machine
-import network
 import sys
 import time
+
+import machine
+import network
 
 import cratedb
 
@@ -42,8 +45,8 @@ try:
             ts TIMESTAMP WITH TIME ZONE GENERATED ALWAYS AS current_timestamp, 
             temp DOUBLE PRECISION
             )
-        """, 
-        return_response = False
+        """,
+        return_response=False,
     )
 
 except Exception as e:
@@ -63,15 +66,11 @@ while True:
     # https://www.coderdojotc.org/micropython/advanced-labs/03-internal-temperature/
     sensor_temp = machine.ADC(4)
     reading = sensor_temp.read_u16() * (3.3 / (65535))
-    temperature = 27 - (reading - 0.706)/0.001721
+    temperature = 27 - (reading - 0.706) / 0.001721
     temperature = round(temperature, 1)
 
     response = crate.execute(
-        "INSERT INTO picow_test (id, temp) VALUES (?, ?)",
-        [
-            ip_addr,
-            temperature
-        ]
+        "INSERT INTO picow_test (id, temp) VALUES (?, ?)", [ip_addr, temperature]
     )
 
     if response["rowcount"] == 1:
@@ -81,10 +80,9 @@ while True:
     # Every 10th iteration let's read back an average value for the last 24hrs.
     if num_iterations == 10:
         response = crate.execute(
-            "SELECT trunc(avg(temp), 1) AS avg_temp FROM picow_test WHERE id=? AND ts >= (CURRENT_TIMESTAMP - INTERVAL '1' DAY)",
-            [
-                ip_addr
-            ]
+            "SELECT trunc(avg(temp), 1) AS avg_temp "
+            "FROM picow_test WHERE id=? AND ts >= (CURRENT_TIMESTAMP - INTERVAL '1' DAY)",
+            [ip_addr],
         )
 
         if response["rowcount"] == 1:

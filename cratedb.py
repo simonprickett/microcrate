@@ -2,7 +2,7 @@ try:
     import requests
 except ImportError:
     import urequests as requests
-    
+
 from base64 import b64encode
 
 # IDs of CrateDB supported data types.
@@ -78,14 +78,19 @@ CRATEDB_ERROR_QUERY_FAILED_ON_SHARDS = 5003
 CRATEDB_ERROR_SNAPSHOT_CREATION_FAILED = 5004
 CRATEDB_ERROR_QUERY_KILLED = 5030
 
+
 class NetworkError(Exception):
     pass
+
 
 class CrateDBError(Exception):
     pass
 
+
 class CrateDB:
-    def __init__(self, host, port=4200, user=None, password=None, schema="doc", use_ssl=True):
+    def __init__(
+        self, host, port=4200, user=None, password=None, schema="doc", use_ssl=True
+    ):
         self.user = user
         self.password = password
         self.schema = schema
@@ -93,31 +98,26 @@ class CrateDB:
         self.port = port
         self.use_ssl = use_ssl
 
-        self.cratedb_url = f"{'https' if self.use_ssl == True else 'http'}://{self.host}:{self.port}/_sql"
+        self.cratedb_url = f"{'https' if self.use_ssl is True else 'http'}://{self.host}:{self.port}/_sql"
 
         if self.user is not None and self.password is not None:
             self.encoded_credentials = self.__encode_credentials(self.user, self.password)
 
-
     def __encode_credentials(self, user, password):
         creds_str = f"{user}:{password}"
         return b64encode(creds_str.encode("UTF-8")).decode("UTF-8")
-    
 
-    def __make_request(self, sql, args=None, with_types = False, return_response = True):
-        headers = {
-            "Content-Type": "text/json",
-            "Default-Schema": self.schema
-        }
+    def __make_request(self, sql, args=None, with_types=False, return_response=True):
+        headers = {"Content-Type": "text/json", "Default-Schema": self.schema}
 
         if hasattr(self, "encoded_credentials"):
             headers["Authorization"] = f"Basic {self.encoded_credentials}"
 
-        request_url = self.cratedb_url if with_types == False else f"{self.cratedb_url}?types"
+        request_url = (
+            self.cratedb_url if with_types is False else f"{self.cratedb_url}?types"
+        )
 
-        payload = {
-            "stmt": sql
-        }
+        payload = {"stmt": sql}
 
         if args is not None:
             for arg in args:
@@ -125,28 +125,29 @@ class CrateDB:
                     payload["args"] = args
                     break
 
-            if not "args" in payload:
+            if "args" not in payload:
                 payload["bulk_args"] = args
 
         try:
-            response = requests.post(
-                request_url,
-                headers = headers,
-                json = payload
-            )
+            response = requests.post(request_url, headers=headers, json=payload)
         except OSError as o:
-            raise NetworkError(o)
+            raise NetworkError(o)  # noqa: B904
 
-        if response.status_code == 400 or response.status_code == 404 or response.status_code == 409:
+        if (
+            response.status_code == 400
+            or response.status_code == 404
+            or response.status_code == 409
+        ):
             error_doc = response.json()
             raise CrateDBError(error_doc)
-        elif response.status_code != 200:
-            raise NetworkError(f"Error {response.status_code}: {response.reason.decode('UTF-8')}")
+        if response.status_code != 200:
+            raise NetworkError(
+                f"Error {response.status_code}: {response.reason.decode('UTF-8')}"
+            )
 
-        if return_response == True:
+        if return_response is True:
             return response.json()
+        return None
 
-
-    def execute(self, sql, args = None, with_types = False, return_response = True):
+    def execute(self, sql, args=None, with_types=False, return_response=True):
         return self.__make_request(sql, args, with_types, return_response)
-    

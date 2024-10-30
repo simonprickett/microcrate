@@ -1,5 +1,7 @@
+# ruff: noqa: W291 Trailing whitespace
+
 # Example script showing different types of interactions with
-# CrateDB. This has no hardware dependencies so should run 
+# CrateDB. This has no hardware dependencies so should run
 # in any MicroPython environment. You will need to edit the
 # code below to use your CrateDB credentials.
 
@@ -20,7 +22,9 @@ crate = cratedb.CrateDB(
 try:
     # Create a table.
     print("Create table.")
-    response = crate.execute("create table driver_test(id TEXT, val1 bigint, val2 bigint, val3 boolean)")
+    response = crate.execute(
+        "create table driver_test(id TEXT, val1 bigint, val2 bigint, val3 boolean)"
+    )
     # response:
     # {'rows': [[]], 'rowcount': 1, 'cols': [], 'duration': 119.652275}
     print(response)
@@ -29,10 +33,7 @@ try:
     print("Bulk insert.")
     response = crate.execute(
         "insert into driver_test (id, val1, val2, val3) values (?, ?, ?, ?)",
-        [
-            [ "a", 2, 3, True ],
-            [ "b", 3, 4, False ]
-        ]
+        [["a", 2, 3, True], ["b", 3, 4, False]],
     )
     # response:
     # {'results': [{'rowcount': 1}, {'rowcount': 1}], 'cols': [], 'duration': 6.265751}
@@ -42,14 +43,14 @@ try:
     print("Select with column data types.")
     response = crate.execute("select * from driver_test", with_types=True)
     # response:
-    # {'col_types': [4, 10, 10, 3], 'cols': ['id', 'val1', 'val2', 'val3'], 'rowcount': 2, 'rows': [['b', 3, 4, False], ['a', 2, 3, True]], 'duration': 4.378391}
+    # {'col_types': [4, 10, 10, 3], 'cols': ['id', 'val1', 'val2', 'val3'], 'rowcount': 2,
+    #  'rows': [['b', 3, 4, False], ['a', 2, 3, True]], 'duration': 4.378391}
     print(response)
 
     # SELECT with parameter substitution.
     print("Select with parameter substitution.")
     response = crate.execute(
-        "select val1, val2 from driver_test where val1 > ? and val2 < ?",
-        [ 1, 4 ]
+        "select val1, val2 from driver_test where val1 > ? and val2 < ?", [1, 4]
     )
     # response:
     # {'rows': [[2, 3]], 'rowcount': 1, 'cols': ['val1', 'val2'], 'duration': 3.266117}
@@ -59,7 +60,7 @@ try:
     print("Insert with parameter substitution.")
     response = crate.execute(
         "insert into driver_test (id, val1, val2, val3) values (?, ?, ?, ?)",
-        [ "d", 1, 9, False ]
+        ["d", 1, 9, False],
     )
     # response:
     # {'rows': [[]], 'rowcount': 1, 'cols': [], 'duration': 5.195949}
@@ -69,8 +70,8 @@ try:
     print("Insert with parameter substitution and no response processing.")
     response = crate.execute(
         "insert into driver_test (id, val1, val2, val3) values (?, ?, ?, ?)",
-        [ "e", 4, 12, True ],
-        return_response=False
+        ["e", 4, 12, True],
+        return_response=False,
     )
     # response:
     # None

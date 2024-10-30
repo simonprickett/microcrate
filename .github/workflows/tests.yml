@@ -55,7 +55,7 @@ jobs:
         run: uv pip install --system --requirement=requirements.txt --requirement=requirements-dev.txt
 
       - name: Run linters and software tests
-        run: poe test
+        run: poe check
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov
