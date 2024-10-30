@@ -1,0 +1,6 @@
+poethepoet
+pyproject-fmt<3
+pytest<9
+pytest-cov<7
+ruff<0.8
+validate-pyproject<0.23
