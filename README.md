@@ -46,7 +46,7 @@ import cratedb
 
 ### Connecting to CrateDB
 
-Connect to a CrateDB cluster in the cloud by providing hostname, user name and password:
+Connect to a CrateDB Cloud cluster using SSL, by providing hostname, username, and password:
 
 ```python
 crate = cratedb.CrateDB(
@@ -58,7 +58,9 @@ crate = cratedb.CrateDB(
 
 The driver uses SSL by default.
 
-If you're running CrateDB locally (with Docker for example), connect like this:
+If you're running CrateDB on your workstation (with Docker for example,
+by using `docker run --rm -it --publish=4200:4200 crate`), connect like
+this:
 
 ```python
 crate = cratedb.CrateDB(
@@ -389,7 +391,7 @@ The driver can throw the following types of exception:
 Here's an example showing how to catch a network error:
 
 ```python
-crate = cratedb.CrateDB("nonexist", use_ssl = False)
+crate = cratedb.CrateDB("nonexist", use_ssl=False)
 
 try:
     response = crate.execute(
