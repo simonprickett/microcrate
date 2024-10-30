@@ -9,12 +9,17 @@ import time
 
 import cratedb
 
-# Configure CrateDB driver.
+# CrateDB Docker / local network, no SSL.
+crate = cratedb.CrateDB(host="localhost", use_ssl=False)
+
+# CrateDB Cloud, using SSL.
+"""
 crate = cratedb.CrateDB(
-    host="hostname", 
-    user="username", 
+    host="testdrive.cratedb.net",
+    user="username",
     password="password"
 )
+"""
 
 # Set up the WiFi and connect.
 wlan = network.WLAN(network.STA_IF)
