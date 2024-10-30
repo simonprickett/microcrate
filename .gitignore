@@ -3,3 +3,5 @@
 *.swp
 *.bak
 .env
+.idea
+__pycache__
