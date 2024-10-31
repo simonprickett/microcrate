@@ -1,3 +1,5 @@
+# ruff: noqa: S603, S607
+
 import os
 import subprocess
 from pathlib import Path

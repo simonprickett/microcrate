@@ -1,5 +1,5 @@
 [tool.ruff]
-line-length = 100
+line-length = 90
 
 extend-exclude = [
 ]
@@ -45,7 +45,7 @@ lint.per-file-ignores."examples/*" = [
 ]
 
 lint.per-file-ignores."tests/*" = [
-  "S101",   # Allow use of `assert`
+  "S101", # Allow use of `assert`
 ]
 
 [tool.pytest.ini_options]
@@ -58,7 +58,6 @@ log_level = "DEBUG"
 log_cli_level = "DEBUG"
 log_format = "%(asctime)-15s [%(name)-36s] %(levelname)-8s: %(message)s"
 xfail_strict = true
-
 
 [tool.coverage.paths2]
 source = [
@@ -84,7 +83,6 @@ exclude_lines = [
   "raise NotImplemented",
 ]
 
-
 # ===================
 # Tasks configuration
 # ===================
@@ -109,7 +107,6 @@ lint = [
   { cmd = "ruff check ." },
   { cmd = "validate-pyproject pyproject.toml" },
 ]
-
 
 [tool.poe.tasks.test]
 cmd = "pytest"
