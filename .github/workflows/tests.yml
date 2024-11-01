@@ -51,11 +51,11 @@ jobs:
             pyproject.toml
             requirements*.txt
 
-      - name: Set up project tools
+      - name: Set up project requirements and tools
         run: uv pip install --system --requirement=requirements.txt --requirement=requirements-dev.txt
 
       - name: Run linters and software tests
-        run: poe check
+        run: poe check-cpython
 
       # https://github.com/codecov/codecov-action
       - name: Upload coverage results to Codecov
@@ -68,3 +68,55 @@ jobs:
           env_vars: OS,PYTHON
           name: codecov-umbrella
           fail_ci_if_error: false
+
+
+  test-micropython:
+    name: "
+    MicroPython ${{ matrix.micropython-version }}
+    "
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest']
+        micropython-version: [
+          'v1.20.0',
+          'v1.24.0',
+          'v1.25.0-preview',
+        ]
+
+    env:
+      OS: ${{ matrix.os }}
+      MICROPYTHON: ${{ matrix.micropython-version }}
+
+    services:
+      cratedb:
+        image: crate/crate:nightly
+        ports:
+          - 4200:4200
+
+    steps:
+
+      - name: Acquire sources
+        uses: actions/checkout@v4
+
+      - name: Set up CPython
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+      - name: Set up project tools
+        run: uv pip install --system poethepoet
+
+      # https://github.com/marketplace/actions/install-micropython
+      - name: Set up MicroPython ${{ matrix.micropython-version }}
+        uses: BrianPugh/install-micropython@v2
+        with:
+          reference: ${{ matrix.micropython-version }}
+
+      - name: Set up project requirements
+        run: micropython -m mip install base64 requests
+
+      - name: Run linters and software tests
+        run: poe check-micropython
