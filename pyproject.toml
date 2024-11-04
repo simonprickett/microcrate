@@ -59,12 +59,6 @@ log_cli_level = "DEBUG"
 log_format = "%(asctime)-15s [%(name)-36s] %(levelname)-8s: %(message)s"
 xfail_strict = true
 
-[tool.coverage.paths2]
-source = [
-  ".",
-  "examples",
-]
-
 [tool.coverage.run]
 branch = false
 source = [
