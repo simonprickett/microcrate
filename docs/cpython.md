@@ -2,6 +2,11 @@
 
 The module is designed for [MicroPython], but also works on [CPython].
 
+While CPython does not provide hardware support usually available when
+running MicroPython on embedded devices, this is mostly not a concern
+when running a database driver.
+
+
 ## Setup
 
 Install Python package and project manager [uv].

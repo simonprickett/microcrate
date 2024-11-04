@@ -90,8 +90,17 @@ exclude_lines = [
 [tool.poe.tasks]
 
 check = [
-  "lint",
-  "test",
+  "check-cpython",
+  "check-micropython",
+]
+
+check-cpython = [
+  "lint-cpython",
+  "test-cpython",
+]
+
+check-micropython = [
+  "test-micropython",
 ]
 
 format = [
@@ -102,18 +111,23 @@ format = [
   { cmd = "pyproject-fmt --keep-full-version pyproject.toml" },
 ]
 
-lint = [
+lint-cpython = [
   { cmd = "ruff format --check ." },
   { cmd = "ruff check ." },
   { cmd = "validate-pyproject pyproject.toml" },
 ]
 
-[tool.poe.tasks.test]
+[tool.poe.tasks."test-cpython"]
 cmd = "pytest"
-help = "Invoke software tests"
+help = "Invoke software tests on CPython"
 
-[tool.poe.tasks.test.args.expression]
+[tool.poe.tasks."test-cpython".args.expression]
 options = [ "-k" ]
 
-[tool.poe.tasks.test.args.marker]
+[tool.poe.tasks."test-cpython".args.marker]
 options = [ "-m" ]
+
+[tool.poe.tasks."test-micropython"]
+sequence = [
+  { shell = 'MICROPYPATH="${HOME}/.micropython/lib:$(pwd)" micropython tests/test_micropython.py' },
+]

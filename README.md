@@ -444,7 +444,9 @@ Constants for each value of `code` are provided.  For example `4043` is `CRATEDB
 ## Examples
 
 The [`examples`](examples/) folder contains example MicroPython scripts, some of which are for specific microcontroller boards, including the popular Raspberry Pi Pico W.
-Hardware-independent example programs also work well on CPython, see [Running on CPython](./docs/cpython.md).
+Hardware-independent example programs also work well on CPython, and the
+MicroPython UNIX and Windows port, see [Running on CPython](./docs/cpython.md)
+and [Running on MicroPython](./docs/micropython.md).
 
 ## Testing
 

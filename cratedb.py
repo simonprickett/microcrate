@@ -129,7 +129,7 @@ class CrateDB:
                 payload["bulk_args"] = args
 
         try:
-            response = requests.post(request_url, headers=headers, json=payload)
+            response = requests.post(request_url, headers=headers, json=payload)  # noqa: S113
         except OSError as o:
             raise NetworkError(o)  # noqa: B904
 
