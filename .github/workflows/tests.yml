@@ -70,10 +70,10 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           files: ./coverage.xml
-          flags: main
+          flags: cpython
           env_vars: OS,PYTHON
           name: codecov-umbrella
-          fail_ci_if_error: false
+          fail_ci_if_error: true
 
 
   test-micropython:

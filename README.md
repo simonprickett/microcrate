@@ -1,6 +1,7 @@
 # micropython-cratedb - A CrateDB Driver for MicroPython
 
 [![Tests](https://github.com/crate/micropython-cratedb/actions/workflows/tests.yml/badge.svg)](https://github.com/crate/micropython-cratedb/actions/workflows/tests.yml)
+[![Test coverage](https://img.shields.io/codecov/c/gh/crate/micropython-cratedb.svg?style=flat-square)](https://codecov.io/gh/crate/micropython-cratedb/)
 
 ## Introduction
 
