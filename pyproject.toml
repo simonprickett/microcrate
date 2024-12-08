@@ -63,9 +63,9 @@ xfail_strict = true
 branch = false
 source = [
   ".",
-  "examples",
 ]
 omit = [
+  "examples/*",
   "tests/*",
 ]
 
